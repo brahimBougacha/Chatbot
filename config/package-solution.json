@@ -1,0 +1,40 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "chatbot-solution-client-side-solution",
+    "id": "e8bf1498-8b4b-44fb-8384-8251de9ebcba",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "developer": {
+      "name": "",
+      "websiteUrl": "",
+      "privacyUrl": "",
+      "termsOfUseUrl": "",
+      "mpnId": "Undefined-1.21.1"
+    },
+    "metadata": {
+      "shortDescription": {
+        "default": "chatbot_solution description"
+      },
+      "longDescription": {
+        "default": "chatbot_solution description"
+      },
+      "screenshotPaths": [],
+      "videoUrl": "",
+      "categories": []
+    },
+    "features": [
+      {
+        "title": "chatbot-solution Feature",
+        "description": "The feature that activates elements of the chatbot-solution solution.",
+        "id": "8ad8b55b-657f-468e-ac27-72591b191dfe",
+        "version": "1.0.0.0"
+      }
+    ]
+  },
+  "paths": {
+    "zippedPackage": "solution/chatbot-solution.sppkg"
+  }
+}

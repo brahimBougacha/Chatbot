@@ -1,0 +1,43 @@
+{
+  "extends": "./node_modules/@microsoft/rush-stack-compiler-5.3/includes/tsconfig-web.json",
+  "compilerOptions": {
+    //kenet es5 badeltha es2017
+    "target": "es2017",
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "jsx": "react",
+    "declaration": true,
+    "sourceMap": true,
+    "experimentalDecorators": true,
+    "skipLibCheck": true,
+    "outDir": "lib",
+    "inlineSources": false,
+    "noImplicitAny": true,
+    //ligne he4i jdida 
+    "esModuleInterop": true,
+    
+
+    "typeRoots": [
+      "./node_modules/@types",
+      "./node_modules/@microsoft",
+      //"./node_modules/@azure"
+],
+    // zedna node houni
+    //"types": ["@azure/openai"],
+ 
+    "types": [
+      "webpack-env","node"
+    ],
+    "lib": [
+      "es2017",
+      "dom",
+      "es2015.collection",
+      "es2015.promise"
+    ]
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx"
+  ]
+}

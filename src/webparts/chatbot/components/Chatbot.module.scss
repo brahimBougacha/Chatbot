@@ -1,0 +1,191 @@
+@import '~@fluentui/react/dist/sass/References.scss';
+
+.chatbot {
+  overflow: hidden;
+  padding: 1em;
+  color: "[theme:bodyText, default: #323130]";
+  color: var(--bodyText);
+  &.teams {
+    font-family: $ms-font-family-fallbacks;
+  }
+}
+
+.welcomeImage {
+  width: 100%;
+  max-width: 420px;
+}
+.welcomeMessage {
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #f3f3f3;
+  border-radius: 5px;
+  text-align: center;
+  font-weight: bold;
+  color: #333;
+}
+.links {
+  a {
+    text-decoration: none;
+    color: "[theme:link, default:#03787c]";
+    color: var(--link); // note: CSS Custom Properties support is limited to modern browsers only
+
+    &:hover {
+      text-decoration: underline;
+      color: "[theme:linkHovered, default: #014446]";
+      color: var(--linkHovered); // note: CSS Custom Properties support is limited to modern browsers only
+    }
+  }
+}
+
+.chatHistory {
+  flex: 1;
+  //overflow-y: auto;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  background: #fff;
+  box-sizing: border-box;
+  overflow: visible; 
+}
+
+.chatMessage {
+  background-color: #f1f1f1;
+  margin: 5px 0;
+  padding: 8px;
+  border-radius: 5px;
+}
+
+.chatScroll {
+  height: 400px;
+  overflow-y: auto;
+  padding: 5px;
+}
+
+.chatInputContainer {
+  display: flex;
+  gap: 8px;
+}
+
+.chatInput {
+  flex: 1;
+  padding: 8px;
+}
+
+.sendButton {
+  padding: 8px 12px;
+  background-color: #0078d4;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+.chatInputWrapper {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  background-color: #f6f7f9;
+  border-top: 1px solid #ddd;
+  border-radius: 12px;
+  margin-top: 10px;
+}
+
+.chatInputContainer {
+  display: flex;
+  gap: 8px;
+  background-color: #fff;
+  padding: 8px 12px;
+  border-radius: 20px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  flex: 1;
+}
+
+.chatInput {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  background: transparent;
+}
+
+.sendButton,
+.newChatButton {
+  background-color: #0078d4;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 14px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.newChatButton {
+  background-color: #e5e5e5;
+  color: #333;
+}
+
+.sendButton:disabled {
+  background-color: #a0a0a0;
+  cursor: not-allowed;
+}
+
+.toolbar {
+  margin-bottom: 10px;
+  text-align: right;
+}
+
+.saveButton {
+  background-color: #0078d4;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.saveButton:disabled {
+  background-color: #c7c7c7;
+  cursor: not-allowed;
+}
+
+/* conteneur principal des bulles */
+.bubble {
+  max-width: 80%;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  padding: 8px 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* bulle de l’utilisateur (alignée à droite, bleu) */
+.userBubble {
+  border: 1px solid #0078D4;
+  margin-left: auto;
+  margin-right: 10px;
+}
+
+/* bulle du bot (alignée à gauche, gris) */
+.botBubble {
+  border: 1px solid #ccc;
+  margin-left: 10px;
+  margin-right: auto;
+}
+
+/* en-tête (titre bold) */
+.bubbleHeader {
+  font-weight: bold;
+  margin-bottom: 4px;
+  font-size: 0.9rem;
+}
+
+/* couleur de l’en-tête user vs bot */
+.userHeader {
+  color: #0078D4;
+}
+.botHeader {
+  color: #555;
+}
+
+/* contenu du message */
+.bubbleContent {
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
