@@ -1,4 +1,3 @@
-/// he4a exemple ken sta79yto f laison mta3 API from azure 
 import { OpenAIClient, AzureKeyCredential } from "@azure/openai";
 
 const functions = [
@@ -52,8 +51,6 @@ const functions = [
   }
 }
 ];
-
-  // Tu peux ajouter d'autres fonctions ici (comme lireSoldeConge)
 
 async function getChatResponse(messages: { role: string; content: string }[]): Promise<{ content: string; functionCall?: any }> {
   const deployment_id = "gpt-35-turbo";

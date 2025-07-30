@@ -10,12 +10,12 @@ export const getListContent = async (context: any, listName: string): Promise<st
     const json = await response.json();
 
     if (!json.value || json.value.length === 0) {
-      return `⚠️ La liste "${listName}" est vide ou inaccessible.`;
+      return `La liste "${listName}" est vide ou inaccessible.`;
     }
 
     const firstItem = json.value[0];
 
-    // Colonnes techniques SharePoint à ignorer
+    // Colonnes techniques SharePoint (par défaut) à ignorer
     const technicalColumns = [
       "@odata.type", "@odata.id", "@odata.etag", "@odata.editLink",
       "FileSystemObjectType", "ServerRedirectedEmbedUri", "ServerRedirectedEmbedUrl",
@@ -30,11 +30,10 @@ export const getListContent = async (context: any, listName: string): Promise<st
     );
 
     // Générer l'entête du tableau
-    let table = `📋 Contenu de la liste **${listName}** :\n\n`;
+    let table = `Contenu de la liste **${listName}** :\n\n`;
     table += `| ${allowedColumns.join(" | ")} |\n`;
-   // table += `| ${allowedColumns.map(() => "---").join(" | ")} |\n`;
 
-    // Générer les lignes
+
     json.value.forEach((item: any) => {
       const row = allowedColumns.map(col => item[col] ?? "—").join(" | ");
       table += `| ${row} |\n`;
@@ -43,6 +42,6 @@ export const getListContent = async (context: any, listName: string): Promise<st
     return table;
   } catch (error) {
     console.error("Erreur getListContent:", error);
-    return `❌ Erreur lors de l'accès à la liste "${listName}".`;
+    return `Erreur lors de l'accès à la liste "${listName}".`;
   }
 };

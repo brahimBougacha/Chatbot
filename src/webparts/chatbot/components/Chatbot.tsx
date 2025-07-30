@@ -1,12 +1,11 @@
 import * as React from 'react';
 import styles from './Chatbot.module.scss';
 import getChatResponse from '../../../services/ChatService';
-//import { SPHttpClient } from '@microsoft/sp-http'; // Importe le client HTTP de SharePoint. C'est l'outil fourni par SPFx pour faire des appels API authentifiés à SharePoint 
 import { IChatbotProps } from './IChatbotProps';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css'
-// importé les function :
+
 import { getListContent } from './functions/getListContent';
 import { getSiteInfo } from './functions/getSiteInfo';
 import { passerDemandeCV } from './functions/passerDemandeCV';
@@ -53,7 +52,7 @@ const Chatbot: React.FC<IChatbotProps> = ({ userDisplayName, userEmail, context 
       - La date de début du congé  
       - La date de fin du congé  
       - Votre adresse e-mail (si différent de ${userEmail})`;
-      // On sauvegarde dans un état temporaire le nom/prénom déjà connus
+      
       setMessages(prev => [...prev, { role: "assistant", content: reply }]);
       setLoading(false);
       return;
@@ -62,6 +61,7 @@ const Chatbot: React.FC<IChatbotProps> = ({ userDisplayName, userEmail, context 
        else if (functionCall) {
         const { name, arguments: argsStr } = functionCall;
         const args = JSON.parse(argsStr || '{}');
+
         // Récupérer nom et prénom depuis userDisplayName si non fournis
         const parts = userDisplayName.split(" ");
         const prenom = parts[0];
@@ -76,13 +76,13 @@ const Chatbot: React.FC<IChatbotProps> = ({ userDisplayName, userEmail, context 
           case 'passerDemandeCV': reply = await passerDemandeCV(context,args); break;
           case 'passerDemandeConge': reply = await passerDemandeConge(context,args); break;
           case 'getSiteInfo': reply = await getSiteInfo(context); break;
-          default: reply = `❌ Fonction non reconnue: ${name}`;
+          default: reply = `Fonction non reconnue: ${name}`;
         }
       }
       setMessages(prev => [...prev, { role: 'assistant', content: reply }]);
     } catch (error: any) {
       console.error('Erreur GPT flow:', error);
-      setMessages(prev => [...prev, { role: 'assistant', content: `❌ Erreur: ${error.message}` }]);
+      setMessages(prev => [...prev, { role: 'assistant', content: `❌Erreur: ${error.message}` }]);
     }
 
     setLoading(false);

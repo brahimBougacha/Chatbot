@@ -1,5 +1,4 @@
  import { SPHttpClient } from '@microsoft/sp-http';
-
  
  export const getSiteInfo = async (context: any): Promise<string> => {
     try {
@@ -10,6 +9,6 @@
       const json = await response.json();
       return json.value.map((l: any) => `- ${l.Title} (${l.ItemCount} items)`).join("\n");
     } catch (error: any) {
-      return `❌ Échec lecture site: ${error.message}`;
+      return `Échec lecture site: ${error.message}`;
     }
   };

@@ -1,10 +1,9 @@
 import { SPHttpClient } from '@microsoft/sp-http';
 import { getEntityTypeFromList } from './getEntityType';
-
-  // Fonction qui enregistre une demande de congé !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//Méthode pour calculer les jour de congé 
 const calculerJours = (dateDebut: Date, dateFin: Date): number => {
   const diffTime = Math.abs(dateFin.getTime() - dateDebut.getTime());
-  return Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1; // inclure la date de début
+  return Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
 };
 
 
@@ -85,9 +84,9 @@ export const passerDemandeConge = async (context: any, args: any): Promise<strin
         console.error("HTTP Conge error:", text);
         throw new Error(text);
       }
-      return `✅ Demande de congé enregistrée pour ${args.prenom} ${args.nom} du ${args.dateDebut} au ${args.dateFin}. Votre nouveaux solde actuelle est ${nouveauSolde}`;
+      return `✅Demande de congé enregistrée pour ${args.prenom} ${args.nom} du ${args.dateDebut} au ${args.dateFin}. Votre nouveaux solde actuelle est ${nouveauSolde}`;
     } catch (error: any) {
       console.error("Erreur passerDemandeConge:", error);
-      return `❌ Échec enregistrement congé: ${error.message}`;
+      return `Échec enregistrement congé: ${error.message}`;
     }
   };

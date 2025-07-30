@@ -25,7 +25,7 @@ import { SPHttpClient } from '@microsoft/sp-http';
         SPHttpClient.configurations.v1,
         {
           headers: {
-            "Accept": "application/json;odata.metadata=minimal",   // OData v4
+            "Accept": "application/json;odata.metadata=minimal",
             "Content-Type": "application/json;odata.metadata=minimal"
           },
           body: JSON.stringify(payload)
@@ -40,6 +40,6 @@ import { SPHttpClient } from '@microsoft/sp-http';
       return `✅ Demande de CV enregistrée pour ${args.nom}. Un e‑mail sera envoyé à ${args.email}.`;
     } catch (error: any) {
       console.error("Erreur passerDemandeCV:", error);
-      return `❌ Échec enregistrement CV: ${error.message}`;
+      return `Échec enregistrement CV: ${error.message}`;
     }
   };
