@@ -32,23 +32,6 @@ const functions = [
     },
     required: ["nom", "prénom", "typeConge", "dateDebut", "dateFin"]
   }
-},
-{
-  name: "passerDemandeCV",
-  description: "Permet à un utilisateur de faire une demande de CV",
-  parameters: {
-    type: "object",
-    properties: {
-      Title: { type: "string" },
-      nom: { type: "string", description: "Nom de l'utilisateur" },
-      prenom: { type: "string", description: "Prénom de l'utilisateur" },
-      age: { type: "string", description: "Âge de l'utilisateur" },
-      genre: { type: "string", description: "Genre de l'utilisateur" },
-      profession: { type: "string", description: "Profession ou statut" },
-      email: { type: "string", description: "Adresse e-mail de l'utilisateur" }
-    },
-    required: ["nom", "prenom", "email"]
-  }
 }
 ];
 
