@@ -80,7 +80,7 @@ function phraseExisteDansTexteParLigne(texte: string, phrase: string): boolean {
 }
 export async function rechercheDocumentaire(context: any, question: string): Promise<string> {
   try {
-    // 1. Récupérer la liste des fichiers dans la bibliothèque "Documents"
+    
     const listUrl = `${context.pageContext.web.absoluteUrl}/_api/web/lists/getbytitle('Documents')/items?$select=FileLeafRef,FileRef&$top=50`;
     const listRes = await context.spHttpClient.get(listUrl, SPHttpClient.configurations.v1);
     const listJson = await listRes.json();
@@ -103,16 +103,14 @@ export async function rechercheDocumentaire(context: any, question: string): Pro
       const fileUrl = `${context.pageContext.web.absoluteUrl}/_api/web/GetFileByServerRelativeUrl('${item.FileRef}')/$value`;
 
       try {
-        // Télécharger le fichier en ArrayBuffer
+        
         const fileRes = await context.spHttpClient.get(fileUrl, SPHttpClient.configurations.v1);
         if (!fileRes.ok) continue;
 
         const arrayBuffer = await fileRes.arrayBuffer();
 
-        // Extraire le texte selon le format
         const texte = await extraireTexteDepuisFichier(fileName, arrayBuffer);
 
-        // NOUVEAU : recherche de la phrase complète sur base "par ligne"
         const contientPhrase = phraseExisteDansTexteParLigne(texte, motCleNettoye);
         if (contientPhrase) {
           resultats.push(fileName);
@@ -123,7 +121,6 @@ export async function rechercheDocumentaire(context: any, question: string): Pro
       }
     }
 
-    // 4. Retourner la réponse
     if (resultats.length === 0) {
       return `🔍 Aucun document ne contient la phrase **${motCleNettoye}**.`;
     } else {

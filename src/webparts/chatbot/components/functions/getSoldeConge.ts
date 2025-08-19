@@ -2,7 +2,7 @@ import { SPHttpClient } from '@microsoft/sp-http';
 
 export const getSoldeConge = async (context: any, nom: string): Promise<string> => {
   try {
-    // Récupère la dernière ligne correspondant au nom de l'utilisateur
+    
     const response = await context.spHttpClient.get(
       `${context.pageContext.web.absoluteUrl}/_api/web/lists/getbytitle('DemandesConge')/items?$filter=nom eq '${nom}'&$orderby=Id desc&$top=1`,
       SPHttpClient.configurations.v1

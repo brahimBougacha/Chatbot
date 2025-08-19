@@ -28,7 +28,6 @@ export const getListContent = async (context: any, listName: string): Promise<st
     table += `| ${allowedColumns.join(" | ")} |\n`;
     table += `| ${allowedColumns.map(() => "---").join(" | ")} |\n`;
 
-    // Générer les lignes
     json.value.forEach((item: any) => {
       const row = allowedColumns.map(col => item[col] ?? "—").join(" | ");
       table += `| ${row} |\n`;

@@ -5,11 +5,10 @@ import getChatResponse from '../../../../services/ChatService';
 import { getDocumentsBibliotheque } from './getDocumentsBibliotheque';
 import { getEntityTypeFromList } from './getEntityType';
 
-//pdf.js utilise un worker (thread) pour parser les PDFs
 pdfjsLib.GlobalWorkerOptions.workerSrc ="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js";
 
 export async function resumerDocument(context: any, docName: string): Promise<string> {
-  // 1. Charger le PDF depuis SharePoint
+
   const fileUrl = `${context.pageContext.web.absoluteUrl}/_api/web/GetFileByServerRelativeUrl('/sites/SPFxTest/Shared Documents/${docName}')/$value`;
   const ext = docName.split('.').pop()?.toLowerCase();
 
@@ -24,7 +23,7 @@ export async function resumerDocument(context: any, docName: string): Promise<st
       return `Le document **${docName}** n'existe pas dans la bibliothèque.\n\n${docs}`;
     }
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
-     // 2. Extraire le texte selon l’extension
+     
     if (ext === 'pdf') {
       const arrayBuffer = await res.arrayBuffer();
       const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
@@ -47,7 +46,7 @@ export async function resumerDocument(context: any, docName: string): Promise<st
     } else {
       return `Format **.${ext}** non pris en charge pour le résumé.`;
     }
-    // 3. Envoyer à GPT pour résumé
+   
     const systemPrompt = {
       role: "system",
       content: "Vous êtes un résumé automatique. Résumez de façon claire et concise le texte fourni."
@@ -58,7 +57,7 @@ export async function resumerDocument(context: any, docName: string): Promise<st
       content: `Résumé du document **${docName}**:\n\n${rawText}`
     };
     const { content: summary } = await getChatResponse([systemPrompt, userPrompt]);
-     // 4. Sauvegarder le résumé dans SharePoint
+    
     const entityType = await getEntityTypeFromList(context, 'ResumerDoc');
     const payload = {
       "@odata.type": entityType,

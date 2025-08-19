@@ -19,7 +19,6 @@ export const passerDemandeConge = async (context: any, args: any): Promise<strin
         return new Date(`${parts[2]}-${parts[1]}-${parts[0]}T00:00:00Z`);
       }
     };
-      // Conversion des dates vers le format ISO attendu par SharePoint
       const dateDebut = parseDate(args.dateDebut);
       const dateFin = parseDate(args.dateFin);
       const joursDemandes = calculerJours(dateDebut, dateFin);
@@ -30,7 +29,6 @@ export const passerDemandeConge = async (context: any, args: any): Promise<strin
     );
     const soldeJson = await soldeRes.json();
 
-    // Par défaut, chaque utilisateur a 30 jours
     let soldeActuel = 30;
     if (soldeJson.value && soldeJson.value.length > 0 && soldeJson.value[0].SoldeConge !== undefined) {
       soldeActuel = soldeJson.value[0].SoldeConge;

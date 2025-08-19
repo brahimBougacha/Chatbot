@@ -5,7 +5,7 @@ import { IChatbotProps } from './IChatbotProps';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css'
-// les functions
+
 import { getListContent } from './functions/getListContent';
 import { getSiteInfo } from './functions/getSiteInfo';
 import { passerDemandeConge } from './functions/passerDemandeConge';
@@ -107,7 +107,6 @@ const Chatbot: React.FC<IChatbotProps> = ({ userDisplayName, userEmail, context 
           ? await decrireDocument(context, m[1].trim())
           : "Merci de préciser le nom complet du fichier (avec extension : .pdf, .docx ou .txt).";
       }
-      // Recherche documentaire "Quel document parle de X ?"
       else if (/(?:quel(?:le)?\s+(?:document|fichier)|quels?\s+documents?).*?(parle\s+de|contient|traite\s+de|sur|à\s+propos\s+de)/i.test(input)) {
         reply = await rechercheDocumentaire(context, input);
       }
@@ -161,7 +160,6 @@ const Chatbot: React.FC<IChatbotProps> = ({ userDisplayName, userEmail, context 
     setLoading(false);
   };
   
-  // Méthode pour afficher un message en haut de la discussion !!!!!!!!!!
   const getGreeting = (userDisplayName: string) => {
   const hour = new Date().getHours();
 

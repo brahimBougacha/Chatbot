@@ -4,7 +4,7 @@ import { getDocumentsBibliotheque } from './getDocumentsBibliotheque';
 
 export async function decrireDocument(context: any, docName: string): Promise<string> {
   try {
-    // 1. Récupérer les métadonnées via REST
+    
     const metaUrl = `${context.pageContext.web.absoluteUrl}/_api/web/GetFileByServerRelativeUrl('/sites/SPFxTest/Shared Documents/${docName}')?$select=Name,Length,TimeCreated,TimeLastModified,Author/Title&$expand=Author`;
     const res = await context.spHttpClient.get(metaUrl, SPHttpClient.configurations.v1);
     
