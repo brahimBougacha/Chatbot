@@ -14,6 +14,7 @@ import { getDocumentsBibliotheque } from './functions/getDocumentsBibliotheque';
 import { resumerDocument } from './functions/resumerDocument';
 import  {decrireDocument} from './functions/decrireDocument';
 import { rechercheDocumentaire } from './functions/RechercheDocumentaire';
+import { interrogerDocument } from './functions/interrogerDocument';
 
 type ChatMessage = {
   role: "user" | "assistant" | "system";
@@ -21,42 +22,47 @@ type ChatMessage = {
 };
 /// partie ajouter pour sortie un tableaux !!!!!!
 import Table from 'react-bootstrap/Table';
-
 const renderContent = (content: string) => {
-  if (content.includes('|') && content.includes('---')) {
-    const lines = content.trim().split("\n").filter(l => l.startsWith("|"));
-    if (lines.length < 2) return <span>{content}</span>;
+  const parts = content.split("\n\n");
+  return (
+    <>
+      {parts.map((part, idx) => {
+        if (part.includes('|') && part.includes('---')) {
+          const lines = part.trim().split("\n").filter(l => l.startsWith("|"));
+          if (lines.length < 2) return <p key={idx}>{part}</p>;
 
-    const headers = lines[0].split("|").map(h => h.trim()).filter(Boolean);
-    const rows = lines.slice(2).map(line => {
-      const values = line.split("|").map(v => v.trim()).filter(Boolean);
-      return values;
-    });
+          const headers = lines[0].split("|").map(h => h.trim()).filter(Boolean);
+          const rows = lines.slice(2).map(line => {
+            const values = line.split("|").map(v => v.trim()).filter(Boolean);
+            return values;
+          });
 
-    return (
-      <Table striped bordered hover size="sm" responsive>
-        <thead>
-          <tr>
-            {headers.map((h, idx) => (
-              <th key={idx}>{h}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((row, rIdx) => (
-            <tr key={rIdx}>
-              {row.map((val, cIdx) => (
-                <td key={cIdx}>{val}</td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-    );
-  }
-  return <span>{content}</span>;
+          return (
+            <Table striped bordered hover size="sm" responsive key={idx}>
+              <thead>
+                <tr>
+                  {headers.map((h, idx2) => (
+                    <th key={idx2}>{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((row, rIdx) => (
+                  <tr key={rIdx}>
+                    {row.map((val, cIdx) => (
+                      <td key={cIdx}>{val}</td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          );
+        }
+        return <p key={idx}>{part}</p>;
+      })}
+    </>
+  );
 };
-
 ///// fin de partie ajouter !!!!!!!!!!!!!!!!!!!!
 const Chatbot: React.FC<IChatbotProps> = ({ userDisplayName, userEmail, context }) => {
   const [messages, setMessages] = React.useState<ChatMessage[]>([]);
@@ -100,7 +106,7 @@ const Chatbot: React.FC<IChatbotProps> = ({ userDisplayName, userEmail, context 
       } else {
         reply = "Merci de préciser le nom complet du fichier (avec extension : .pdf, .docx ou .txt).";
       }
-    }
+     }
       else if (/(?:description|décrire).*document/i.test(input)) {
         const m = input.match(/document\s+(.+\.(pdf|docx|txt))/i);
         reply = m
@@ -110,7 +116,25 @@ const Chatbot: React.FC<IChatbotProps> = ({ userDisplayName, userEmail, context 
       else if (/(?:quel(?:le)?\s+(?:document|fichier)|quels?\s+documents?).*?(parle\s+de|contient|traite\s+de|sur|à\s+propos\s+de)/i.test(input)) {
         reply = await rechercheDocumentaire(context, input);
       }
-      else if (/solde.*congé/i.test(input)) {
+      else if (/document\s+([\w\-\s]+\.(pdf|docx|txt|csv))/i.test(input)) {
+        const match = input.match(/document\s+([\w\-\s]+\.(pdf|docx|txt|csv))/i);
+
+        if (match) {
+            const docName = match[1].trim();
+            const question = input.replace(/.*document\s+[\w\-\s]+\.(pdf|docx|txt|csv)\s*/i, "").trim();
+            if (!question) {
+            reply = `Vous avez mentionné **${docName}**, mais je n’ai pas trouvé de question. Pouvez-vous préciser ce que vous voulez savoir ?`;
+            } else {
+            reply = await interrogerDocument(context, docName, question);
+            }
+            setMessages(prev => [...prev, { role: "assistant", content: reply }]);
+            setLoading(false);
+            return;
+        } else {
+            reply = "Merci de préciser le nom complet du document (avec extension : .pdf, .docx ou .txt).";
+        }
+       } 
+       else if (/solde.*congé/i.test(input)) {
         const parts = userDisplayName.split(" ");
         const nom = parts.slice(1).join(" ");
         reply = await getSoldeConge(context, nom);
@@ -142,8 +166,6 @@ const Chatbot: React.FC<IChatbotProps> = ({ userDisplayName, userEmail, context 
           args.nom = args.nom || nom;
           args.prenom = args.prenom || prenom;
         }
-
-
         switch (name) {
           case 'getListContent': reply = await getListContent(context,args.nomListe); break;
           case 'passerDemandeConge': reply = await passerDemandeConge(context,args); break;
