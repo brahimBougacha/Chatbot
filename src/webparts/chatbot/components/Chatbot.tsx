@@ -49,9 +49,22 @@ const renderContent = (content: string) => {
               <tbody>
                 {rows.map((row, rIdx) => (
                   <tr key={rIdx}>
-                    {row.map((val, cIdx) => (
-                      <td key={cIdx}>{val}</td>
-                    ))}
+                    {row.map((val, cIdx) => {
+                      // Vérifier si c'est un lien markdown [Texte](url)
+                      const match = val.match(/^\[(.+)\]\((.+)\)$/);
+                      if (match) {
+                        const text = match[1];
+                        const url = match[2];
+                        return (
+                          <td key={cIdx}>
+                            <a href={url} target="_blank" rel="noopener noreferrer">
+                              {text}
+                            </a>
+                          </td>
+                        );
+                      }
+                      return <td key={cIdx}>{val}</td>;
+                    })}
                   </tr>
                 ))}
               </tbody>

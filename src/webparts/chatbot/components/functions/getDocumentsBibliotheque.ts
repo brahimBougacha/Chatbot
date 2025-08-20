@@ -11,13 +11,21 @@ export const getDocumentsBibliotheque = async (context: any): Promise<string> =>
     if (!json.value || json.value.length === 0) {
       return `La bibliothèque "Documents" est vide ou inaccessible.`;
     }
+
+    const webAbs: string = context.pageContext.web.absoluteUrl; 
+    const webServerRel: string = context.pageContext.web.serverRelativeUrl || '';
+    const origin =
+      typeof window !== 'undefined' && window.location && window.location.origin
+        ? window.location.origin
+        : webAbs.replace(webServerRel, '');
+
     let table = `Contenu de la bibliothèque **Documents** :\n\n`;
     table += `| Nom du fichier | Lien |\n`;
     table += `| --- | --- |\n`;
 
     json.value.forEach((doc: any) => {
       const nomFichier = doc.FileLeafRef;
-      const lien = `${context.pageContext.web.absoluteUrl}${doc.FileRef}`;
+      const lien = `${origin}${doc.FileRef}`;
       table += `| ${nomFichier} | [Ouvrir](${lien}) |\n`;
     });
 
