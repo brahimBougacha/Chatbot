@@ -38,7 +38,7 @@ const functions = [
 async function getChatResponse(messages: { role: string; content: string }[]): Promise<{ content: string; functionCall?: any }> {
   const deployment_id = "gpt-35-turbo";
   const endpoint = "https://openaiforged.openai.azure.com/";
-  const azure_openai_key = "m7HvMGc3UgsMWjEJF9mNSKyXTiE6bwkflXHY4Mnki4wLXBkk4hDzJQQJ99BGAC5T7U2XJ3w3AAABACOGsEQQ";//Clé API
+  const azure_openai_key = "Ton_Clé_API";//Clé API
 
   const client = new OpenAIClient(endpoint, new AzureKeyCredential(azure_openai_key));
 
